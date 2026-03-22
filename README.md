@@ -24,7 +24,7 @@ O usuário preenche os campos e os dados são exibidos na própria tela após o 
 
 ## Como Executar
 1. Clone o repositório:
-```bash
+
 git clone <https://github.com/FelipeFerrete/Projetoform.git>
 Entre na pasta do projeto:
 cd nome-do-projeto
@@ -36,3 +36,7 @@ Execute o aplicativo:
 npx react-native run-android
 
 O app abrirá no emulador ou dispositivo conectado. Preencha o formulário e veja os dados aparecerem na tela.
+
+## VIDEO DEMONSTRAÇÃO
+
+![Adobe Express - Recording 2026-03-22 000115](https://github.com/user-attachments/assets/86c11a73-bf81-47b2-93de-4af31014dc43)
