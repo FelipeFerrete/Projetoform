@@ -61,7 +61,7 @@ npm run web       # Navegador
 
 ## Demonstração
 
-![Demonstração do app](https://github.com/user-attachments/assets/86c11a73-bf81-47b2-93de-4af31014dc43)
+![Demonstração do app](![Gravando 2026-04-13 112320](https://github.com/user-attachments/assets/e36987a3-dfdc-4755-a370-93c5704b101a))
 
 ---
 
