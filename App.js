@@ -1,4 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CadastroScreen from './src/screens/CadastroScreen';
 import PerfilScreen from './src/screens/PerfilScreen';
@@ -7,8 +7,10 @@ import { theme } from './src/theme';
 const Stack = createNativeStackNavigator();
 
 const navTheme = {
+  ...DefaultTheme,
   dark: true,
   colors: {
+    ...DefaultTheme.colors,
     primary: theme.colors.brand,
     background: theme.colors.bg,
     card: theme.colors.bg,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Alert,
   Image,
@@ -9,16 +9,30 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import BrandHeader from '../components/BrandHeader';
 import Footer from '../components/Footer';
 import { theme } from '../theme';
 
-const FOTO_PADRAO = require('../../assets/Form_logo.webp');
+const FOTO_PADRAO = require('../../assets/Next.jpg');
+const FOTO_KEY = '@foto_usuario';
 
 export default function PerfilScreen({ route, navigation }) {
   const { nome, curso, disciplina, telefone, cpf, descricao } = route.params;
   const [foto, setFoto] = useState(null);
+
+  useEffect(() => {
+    async function carregarFoto() {
+      try {
+        const uri = await AsyncStorage.getItem(FOTO_KEY);
+        if (uri) setFoto(uri);
+      } catch (e) {
+        console.log('Erro ao carregar foto:', e);
+      }
+    }
+    carregarFoto();
+  }, []);
 
   async function handleEscolherFoto() {
     const permissao = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -35,7 +49,13 @@ export default function PerfilScreen({ route, navigation }) {
     });
 
     if (!resultado.canceled && resultado.assets?.length) {
-      setFoto(resultado.assets[0].uri);
+      const uri = resultado.assets[0].uri;
+      setFoto(uri);
+      try {
+        await AsyncStorage.setItem(FOTO_KEY, uri);
+      } catch (e) {
+        console.log('Erro ao salvar foto:', e);
+      }
     }
   }
 
