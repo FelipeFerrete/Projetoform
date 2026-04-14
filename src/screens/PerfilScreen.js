@@ -1,18 +1,45 @@
-import { Image, ScrollView, StyleSheet, Text, View, Button } from 'react-native';
+import { useState } from 'react';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+
+const FOTO_PADRAO = require('../../assets/Form_logo.webp');
 
 export default function PerfilScreen({ route, navigation }) {
   const { nome, curso, disciplina, telefone, cpf, descricao } = route.params;
+  const [foto, setFoto] = useState(null);
+
+  async function handleEscolherFoto() {
+    const permissao = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissao.granted) {
+      Alert.alert('Permissão necessária', 'Autorize o acesso à galeria para enviar uma foto.');
+      return;
+    }
+
+    const resultado = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+
+    if (!resultado.canceled && resultado.assets?.length) {
+      setFoto(resultado.assets[0].uri);
+    }
+  }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
 
       {/* Dados do desenvolvedor */}
       <View style={styles.devCard}>
-        <Image
-          source={require('../../assets/Form_logo.webp')}
-          style={styles.foto}
-          resizeMode="cover"
-        />
+        <TouchableOpacity onPress={handleEscolherFoto} activeOpacity={0.8}>
+          <Image
+            source={foto ? { uri: foto } : FOTO_PADRAO}
+            style={styles.foto}
+            resizeMode="cover"
+          />
+          <Text style={styles.trocarFoto}>Trocar foto</Text>
+        </TouchableOpacity>
         <Text style={styles.devNome}>Felipe Ferrete</Text>
         <Text style={styles.devRm}>RM: 562999</Text>
       </View>
@@ -81,6 +108,12 @@ const styles = StyleSheet.create({
   devRm: {
     fontSize: 14,
     color: '#8b949e',
+  },
+  trocarFoto: {
+    fontSize: 12,
+    color: '#1f6feb',
+    textAlign: 'center',
+    marginBottom: 12,
   },
   card: {
     backgroundColor: '#161b22',
