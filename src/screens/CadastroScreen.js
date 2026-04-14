@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   Alert,
-  Button,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,6 +10,9 @@ import {
 } from 'react-native';
 import { MaskedTextInput } from 'react-native-mask-text';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import BrandHeader from '../components/BrandHeader';
+import Footer from '../components/Footer';
+import { theme } from '../theme';
 
 const STORAGE_KEY = '@perfil_usuario';
 
@@ -20,6 +23,7 @@ export default function CadastroScreen({ navigation }) {
   const [telefone, setTelefone] = useState('');
   const [cpf, setCpf] = useState('');
   const [descricao, setDescricao] = useState('');
+  const [focado, setFocado] = useState(null);
 
   useEffect(() => {
     async function carregarDados() {
@@ -58,110 +62,201 @@ export default function CadastroScreen({ navigation }) {
     navigation.navigate('Perfil', dados);
   }
 
+  const inputStyle = (key) => [
+    styles.input,
+    focado === key && styles.inputFocado,
+  ];
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.titulo}>Cadastro de Perfil</Text>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
+      <BrandHeader subtitle="Preencha seus dados para gerar um cartão de perfil moderno." />
 
-      <Text style={styles.label}>Nome</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Digite seu nome"
-        placeholderTextColor="#8b949e"
-        value={nome}
-        onChangeText={setNome}
-      />
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <View style={styles.cardIndicator} />
+          <Text style={styles.cardTitulo}>Identificação</Text>
+        </View>
 
-      <Text style={styles.label}>Curso</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Digite seu curso"
-        placeholderTextColor="#8b949e"
-        value={curso}
-        onChangeText={setCurso}
-      />
+        <Text style={styles.label}>Nome completo</Text>
+        <TextInput
+          style={inputStyle('nome')}
+          placeholder="Ex.: Felipe Ferrete"
+          placeholderTextColor={theme.colors.textDim}
+          value={nome}
+          onChangeText={setNome}
+          onFocus={() => setFocado('nome')}
+          onBlur={() => setFocado(null)}
+        />
 
-      <Text style={styles.label}>Disciplina</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Digite a disciplina"
-        placeholderTextColor="#8b949e"
-        value={disciplina}
-        onChangeText={setDisciplina}
-      />
-
-      <Text style={styles.label}>Telefone</Text>
-      <MaskedTextInput
-        mask="(99) 99999-9999"
-        style={styles.input}
-        placeholder="(00) 00000-0000"
-        placeholderTextColor="#8b949e"
-        keyboardType="numeric"
-        value={telefone}
-        onChangeText={(text) => setTelefone(text)}
-      />
-
-      <Text style={styles.label}>CPF</Text>
-      <MaskedTextInput
-        mask="999.999.999-99"
-        style={styles.input}
-        placeholder="000.000.000-00"
-        placeholderTextColor="#8b949e"
-        keyboardType="numeric"
-        value={cpf}
-        onChangeText={(text) => setCpf(text)}
-      />
-
-      <Text style={styles.label}>Descrição</Text>
-      <TextInput
-        style={[styles.input, styles.textArea]}
-        placeholder="Breve descrição sobre você"
-        placeholderTextColor="#8b949e"
-        value={descricao}
-        onChangeText={setDescricao}
-        multiline
-      />
-
-      <View style={styles.botao}>
-        <Button title="Enviar" onPress={handleEnviar} color="#238636" />
+        <View style={styles.row}>
+          <View style={styles.flex1}>
+            <Text style={styles.label}>Curso</Text>
+            <TextInput
+              style={inputStyle('curso')}
+              placeholder="Ex.: ADS"
+              placeholderTextColor={theme.colors.textDim}
+              value={curso}
+              onChangeText={setCurso}
+              onFocus={() => setFocado('curso')}
+              onBlur={() => setFocado(null)}
+            />
+          </View>
+          <View style={styles.flex1}>
+            <Text style={styles.label}>Disciplina</Text>
+            <TextInput
+              style={inputStyle('disciplina')}
+              placeholder="Ex.: Mobile"
+              placeholderTextColor={theme.colors.textDim}
+              value={disciplina}
+              onChangeText={setDisciplina}
+              onFocus={() => setFocado('disciplina')}
+              onBlur={() => setFocado(null)}
+            />
+          </View>
+        </View>
       </View>
+
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <View style={[styles.cardIndicator, { backgroundColor: theme.colors.accent }]} />
+          <Text style={styles.cardTitulo}>Contato</Text>
+        </View>
+
+        <Text style={styles.label}>Telefone</Text>
+        <MaskedTextInput
+          mask="(99) 99999-9999"
+          style={inputStyle('telefone')}
+          placeholder="(00) 00000-0000"
+          placeholderTextColor={theme.colors.textDim}
+          keyboardType="numeric"
+          value={telefone}
+          onChangeText={(text) => setTelefone(text)}
+          onFocus={() => setFocado('telefone')}
+          onBlur={() => setFocado(null)}
+        />
+
+        <Text style={styles.label}>CPF</Text>
+        <MaskedTextInput
+          mask="999.999.999-99"
+          style={inputStyle('cpf')}
+          placeholder="000.000.000-00"
+          placeholderTextColor={theme.colors.textDim}
+          keyboardType="numeric"
+          value={cpf}
+          onChangeText={(text) => setCpf(text)}
+          onFocus={() => setFocado('cpf')}
+          onBlur={() => setFocado(null)}
+        />
+      </View>
+
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <View style={[styles.cardIndicator, { backgroundColor: theme.colors.success }]} />
+          <Text style={styles.cardTitulo}>Sobre você</Text>
+        </View>
+
+        <Text style={styles.label}>Descrição</Text>
+        <TextInput
+          style={[inputStyle('descricao'), styles.textArea]}
+          placeholder="Conte um pouco sobre você..."
+          placeholderTextColor={theme.colors.textDim}
+          value={descricao}
+          onChangeText={setDescricao}
+          multiline
+          onFocus={() => setFocado('descricao')}
+          onBlur={() => setFocado(null)}
+        />
+      </View>
+
+      <Pressable
+        onPress={handleEnviar}
+        style={({ pressed }) => [styles.btnPrimary, pressed && styles.btnPrimaryPressed]}
+      >
+        <Text style={styles.btnPrimaryText}>GERAR PERFIL →</Text>
+      </Pressable>
+
+      <Footer />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0d1117',
+  container: { flex: 1, backgroundColor: theme.colors.bg },
+  content: { padding: theme.spacing.xl, paddingBottom: theme.spacing.xxl },
+  card: {
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.lg,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    padding: theme.spacing.lg,
+    marginBottom: theme.spacing.lg,
   },
-  content: {
-    padding: 20,
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: theme.spacing.lg,
+    gap: 10,
   },
-  titulo: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#c9d1d9',
-    textAlign: 'center',
-    marginBottom: 24,
+  cardIndicator: {
+    width: 4,
+    height: 18,
+    borderRadius: 2,
+    backgroundColor: theme.colors.brand,
+  },
+  cardTitulo: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: theme.colors.text,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
   },
   label: {
-    color: '#8b949e',
-    fontSize: 13,
-    marginBottom: 4,
+    color: theme.colors.textMuted,
+    fontSize: 11,
+    fontWeight: '700',
+    marginBottom: 6,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#30363d',
-    borderRadius: 6,
-    padding: 10,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.md,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
     marginBottom: 14,
-    color: '#c9d1d9',
-    backgroundColor: '#161b22',
+    color: theme.colors.text,
+    backgroundColor: theme.colors.surfaceElevated,
+    fontSize: 15,
   },
-  textArea: {
-    height: 80,
-    textAlignVertical: 'top',
+  inputFocado: {
+    borderColor: theme.colors.brand,
+    backgroundColor: '#1f212b',
   },
-  botao: {
-    marginTop: 8,
+  textArea: { height: 90, textAlignVertical: 'top' },
+  row: { flexDirection: 'row', gap: 12 },
+  flex1: { flex: 1 },
+  btnPrimary: {
+    backgroundColor: theme.colors.brand,
+    borderRadius: theme.radius.md,
+    paddingVertical: 16,
+    alignItems: 'center',
+    shadowColor: theme.colors.brand,
+    shadowOpacity: 0.5,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
+    marginTop: theme.spacing.sm,
+  },
+  btnPrimaryPressed: { backgroundColor: theme.colors.brandDark, transform: [{ scale: 0.98 }] },
+  btnPrimaryText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 2,
   },
 });
