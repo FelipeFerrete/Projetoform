@@ -19,7 +19,7 @@ const FOTO_PADRAO = require('../../assets/Next.jpg');
 const FOTO_KEY = '@foto_usuario';
 
 export default function PerfilScreen({ route, navigation }) {
-  const { nome, curso, disciplina, telefone, cpf, descricao } = route.params;
+  const { nome, curso, disciplina, telefone, cpf, descricao } = route.params ?? {};
   const [foto, setFoto] = useState(null);
 
   useEffect(() => {

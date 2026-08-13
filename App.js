@@ -1,5 +1,6 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './src/screens/HomeScreen';
 import CadastroScreen from './src/screens/CadastroScreen';
 import PerfilScreen from './src/screens/PerfilScreen';
 import { theme } from './src/theme';
@@ -32,6 +33,7 @@ export default function App() {
           contentStyle: { backgroundColor: theme.colors.bg },
         }}
       >
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ title: 'CADASTRO' }} />
         <Stack.Screen name="Perfil" component={PerfilScreen} options={{ title: 'PERFIL' }} />
       </Stack.Navigator>
