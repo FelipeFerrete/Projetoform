@@ -73,7 +73,7 @@ npm run web       # Navegador
 
 ## Demonstração
 
-(![Gravando 2026-04-13 112320](https://github.com/user-attachments/assets/e36987a3-dfdc-4755-a370-93c5704b101a))
+https://github.com/user-attachments/assets/4f2a9872-d963-46fa-b5d7-7dae3f42d416
 
 ---
 
