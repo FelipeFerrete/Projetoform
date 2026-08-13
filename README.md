@@ -1,81 +1,62 @@
 # Projetoform — CP2
 
-Aplicativo mobile de cadastro de perfil desenvolvido com **React Native + Expo**.
-O usuário preenche um formulário com seus dados e é redirecionado para uma tela de perfil exibindo as informações enviadas. Os dados são persistidos localmente com AsyncStorage, sendo recarregados automaticamente ao reabrir o app.
+Aplicativo mobile de cadastro de perfil criado com **React Native** e **Expo**. Este repositório tem finalidade educacional: reúne a entrega da CP2 e um espaço prático para estudar desenvolvimento mobile, organização de código e colaboração com agentes de IA, como **Claude** e **Codex**.
 
+O uso de agentes faz parte do processo de aprendizagem e apoio ao desenvolvimento. Toda sugestão gerada por IA deve ser revisada, compreendida e validada antes de ser incorporada ao projeto.
 
-## Telas
+## O que o aplicativo demonstra
 
-| Cadastro | Perfil |
-|---|---|
-| Formulário com validação de campos obrigatórios, máscara de telefone e CPF | Exibe os dados enviados junto com o card do desenvolvedor |
+- Formulário de perfil com Nome, Curso, Disciplina, Telefone, CPF e Descrição.
+- Validação de campos obrigatórios e máscaras para telefone e CPF.
+- Navegação entre as telas de Cadastro e Perfil com React Navigation.
+- Persistência local dos dados usando AsyncStorage.
+- Foto de perfil opcional, escolhida da galeria com `expo-image-picker`.
+- Sistema visual centralizado em `src/theme.js` e componentes reutilizáveis.
 
----
+## Estrutura do projeto
 
-## Funcionalidades
+```text
+src/
+  components/  # Componentes visuais compartilhados
+  screens/     # Telas CadastroScreen e PerfilScreen
+  theme.js     # Cores, espaçamentos e demais tokens visuais
+assets/        # Imagens incluídas no aplicativo
+```
 
-- Formulário com os campos: **Nome**, **Curso**, **Disciplina**, **Telefone**, **CPF** e **Descrição**
-- Máscaras automáticas para Telefone `(00) 00000-0000` e CPF `000.000.000-00`
-- Validação: todos os campos são obrigatórios antes do envio
-- Persistência local com `AsyncStorage` — dados são salvos e recarregados entre sessões
-- Navegação entre telas com `React Navigation` (Native Stack)
-
-## Novidades do CP2
-
-- **Upload de foto de perfil** via `expo-image-picker` — toque no avatar na tela de Perfil para escolher uma imagem da galeria (com crop 1:1 e permissão gerenciada).
-- **Identidade visual "Ferrete Company's"** — paleta dark industrial com acento laranja (`#ff6a1a`), tipografia em caixa-alta espaçada, cards seccionados com indicadores coloridos, avatar com ring/glow da marca e pills de curso/disciplina.
-- **Sistema de design centralizado** em `src/theme.js` (tokens de cor, spacing, radius) e componentes compartilhados `BrandHeader` / `Footer`.
-- **Créditos do desenvolvedor** visíveis em todas as telas via componente `Footer`.
-
-> **Extras implementados além do escopo da prova:** o upload de foto e a estilização forte com branding **Ferrete Company's** (hero com glow, pills, ring do avatar, wordmark, footer de créditos e sistema de design com tokens) foram adicionados por iniciativa própria — não eram requisitos da CP2.
+`App.js` configura a navegação principal e `index.js` é o ponto de entrada da aplicação.
 
 ## Tecnologias
 
-- [Expo](https://expo.dev/) ~54
-- [React Native](https://reactnative.dev/) 0.81
-- [React Navigation](https://reactnavigation.org/) v7 — Native Stack
-- [react-native-mask-text](https://github.com/akinncar/react-native-mask-text) — máscaras de input
-- [@react-native-async-storage/async-storage](https://react-native-async-storage.github.io/async-storage/) — persistência local
-- [expo-image-picker](https://docs.expo.dev/versions/latest/sdk/imagepicker/) — upload de foto da galeria *(extra)*
-
----
+- Expo 54 e React Native
+- React Navigation (Native Stack)
+- AsyncStorage
+- react-native-mask-text
+- expo-image-picker
 
 ## Como executar
 
-**Pré-requisitos:** Node.js e o aplicativo [Expo Go](https://expo.dev/client) instalado no celular (ou um emulador configurado).
+Pré-requisitos: Node.js, npm e Expo Go no celular ou um emulador configurado.
 
 ```bash
-# Clone o repositório
 git clone https://github.com/FelipeFerrete/Projetoform.git
 cd Projetoform
-
-# Instale as dependências
 npm install
-
-# Instale a lib de upload de foto (extra do CP2)
-npx expo install expo-image-picker
-
-# Inicie o servidor de desenvolvimento
 npm start
 ```
 
-Escaneie o QR code com o Expo Go (Android) ou a câmera (iOS) para abrir o app.
-
-Para rodar diretamente em emulador:
+Após iniciar, leia o QR Code com o Expo Go. Também é possível executar em plataformas específicas:
 
 ```bash
-npm run android   # Android
-npm run ios       # iOS
-npm run web       # Navegador
+npm run android
+npm run ios
+npm run web
 ```
 
----
+## Desenvolvimento e contribuição
 
-## Demonstração
+Use componentes funcionais em JavaScript, indentação de 2 espaços, aspas simples e nomes em PascalCase para componentes (por exemplo, `ProfileCard.js`). Prefira os tokens de `src/theme.js` a valores visuais fixos.
 
-https://github.com/user-attachments/assets/4f2a9872-d963-46fa-b5d7-7dae3f42d416
-
----
+Antes de enviar alterações, teste manualmente o fluxo de cadastro, as máscaras, a persistência após reiniciar o app e, quando aplicável, as permissões da galeria. Use commits objetivos no formato `feat:`, `refactor:` ou `docs:`, com descrição em português.
 
 ## Autor
 
